@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignment 3</title>
+</head>
+<body>
+<div style="text-align: center">
+    <h1>Yaswanth Janardhan Konduru</h1>
+    <h3>1001741845</h3>
+</div>
+<div style="float:left; width:20%; margin-left:10%">
+    <h1>Using Azure Database</h1>
+    <form action="{{url_for('create_table')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Create Table</legend>
+            <label>Create tables</label>
+            <a href="/create"><input type="submit" value="Create"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{celapsed}}</p>
+        </fieldset>
+    </form><br><br>
+    <form action="{{url_for('insert_data')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Insert data</legend>
+            <label for="csvupload">Select the CSV file to insert data</label>
+            <input type="file" id="csvupload" name="csvupload"><br><br>
+            <a href="/insert"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{ielapsed}}</p>
+        </fieldset>
+    </form><br><br>
+
+    <form action="{{url_for('random_q')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Random Queries</legend>
+            <label for="randomq">Enter the number of times you want a query to execute</label>
+            <input type="text" id="randomq" name="randomq"><br><br>
+            <a href="/randomq"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{qelapsed}}</p>
+        </fieldset>
+    </form><br><br>
+
+    <form action="{{url_for('rrandom_q')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Restricted Random Queries</legend>
+            <label for="rrandomq">Enter the number of times you want a query to execute</label>
+            <input type="text" id="rrandomq" name="rrandomq"><br><br>
+            <a href="/rrandomq"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{rqelapsed}}</p>
+        </fieldset>
+    </form><br><br>
+</div>
+<div style="float:left; margin-left:10%; width:20%;">
+    <h1>Using Redis</h1>
+    <form action="{{url_for('nrandom_q')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Random Queries</legend>
+            <label for="nrandomq">Enter the number of times you want a query to execute</label>
+            <input type="text" id="nrandomq" name="nrandomq"><br><br>
+            <a href="/nrandomq"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{nqelapsed}}</p>
+        </fieldset>
+    </form><br><br>
+
+    <form action="{{url_for('nrrandom_q')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Restricted Random Queries</legend>
+            <label for="nrrandomq">Enter the number of times you want a query to execute</label>
+            <input type="text" id="nrrandomq" name="nrrandomq"><br><br>
+            <a href="/nrrandomq"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{nrqelapsed}}</p>
+        </fieldset>
+    </form><br><br>
+</div>
+<div style="float:left; margin-left:10%; width:20%;">
+    <h1>Using mongoDB</h1>
+    <form action="{{url_for('mrandom_q')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Random Queries</legend>
+            <label for="mrandomq">Enter the number of times you want a query to execute</label>
+            <input type="text" id="mrandomq" name="mrandomq"><br><br>
+            <a href="/mrandomq"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{mqelapsed}}</p>
+        </fieldset>
+    </form><br><br>
+
+    <form action="{{url_for('mrrandom_q')}}" enctype=multipart/form-data method="POST" style="width:30%;">
+        <fieldset>
+            <legend>Restricted Random Queries</legend>
+            <label for="mrrandomq">Enter the number of times you want a query to execute</label>
+            <input type="text" id="mrrandomq" name="mrrandomq"><br><br>
+            <a href="/mrrandomq"><input type="submit" value="Insert Value"></a>
+            <p>Time taken for table creation is:</p>
+            <p>{{mrqelapsed}}</p>
+        </fieldset>
+    </form><br><br>
+</div>
+</body>
+</html>
