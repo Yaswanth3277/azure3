@@ -270,8 +270,9 @@ def mrrandom_q():
         longitude2 = 150
         start_time = timeit.default_timer()
         for data in range(int(num)):
-            cursor.execute("select Time, Latitude, Longitude, Depth, Mag, Magtype, Place, LocationSource from quakedata_3 where Mag>? and Mag<? and LocationSource = ? and latitude>? and longitude>? and latitude<? and longitude<?", startmag, stopmag, location, latitude1, longitude1, latitude2, longitude2)
+            todo = todos.find({"Mag": startmag})
             print("HI")
+            print(todo)
         elapsed = timeit.default_timer() - start_time
     return render_template("index.html", mrqelapsed = elapsed)
 
