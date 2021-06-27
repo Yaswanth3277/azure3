@@ -105,11 +105,11 @@ def insert_data():
 def random_q():
     if request.method == 'POST':
         num = request.form.get('randomq')
-        startmag = 2
-        stopmag = 4
         start_time = timeit.default_timer()
         for data in range(int(num)):
-            cursor.execute("select Time, Latitude, Longitude, Depth, Mag, Magtype, Place, LocationSource from quakedata_3 where Mag > ? and Mag < ?",startmag, stopmag)
+            cursor.execute("select Time, Latitude, Longitude, Depth, Mag, Magtype, Place, LocationSource from quakedata_3")
+            cursor.execute("INSERT INTO csvdatabase.dbo.quakedata_3 VALUES('2021-06-20T00:22:13.990Z', 19.23016739, -155.0514984, 42.52000046, 2.29, 'ml', 55, 215, 0.03837, 0.129999995, 'hv', 'hv72535902', '2021-06-20T00:27:46.240Z', '27 km SSE of Fern Forest, Hawaii', 'earthquake', 0.67, 0.479999989,3.22,26, 'automatic', 'hv', 'hv')")
+            conn.commit()
             print("Hello")
         elapsed = timeit.default_timer() - start_time
     return render_template("index.html", qelapsed = elapsed)
@@ -191,57 +191,6 @@ def nrrandom_q():
     return render_template("index.html", nrqelapsed = elapsed)
 
 
-@app.route('/mcreate', methods=['GET', 'POST'])
-def mcreate_table():
-    if request.method == 'POST':
-        start_time = timeit.default_timer()
-        cursor.execute('CREATE TABLE quakedata_3(Time nvarchar(50), Latitude float, Longitude float, Depth float, Mag float NULL DEFAULT 0.0, Magtype nvarchar(50) NULL DEFAULT 0.0, Nst int NULL DEFAULT 0.0, Gap float NULL DEFAULT 0.0, Dmin  float NULL DEFAULT 0.0, Rms float, Net nvarchar(50), ID nvarchar(50), Updated nvarchar(50), Place nvarchar(MAX), Type nvarchar(50), HorizontalError float NULL DEFAULT 0.0, DepthError float, MagError float NULL DEFAULT 0.0, MagNst int NULL DEFAULT 0.0, Status nvarchar(50), LocationSource nvarchar(50), MagSource nvarchar(50))')
-        cursor.execute('CREATE INDEX indexes on quakedata_3(Time, Latitude, Longitude, Mag, Magtype)')
-        conn.commit()
-        elapsed = timeit.default_timer() - start_time
-        print("Time taken to create a table and add indexes is :", elapsed)
-    return render_template('index.html', mcelapsed = elapsed)
-
-
-
-@app.route('/minsert', methods=['GET', 'POST'])
-def minsert_data():
-    if request.method == 'POST':
-        f = request.files['csvupload']
-        f.save(secure_filename(f.filename))
-        df = pd.read_csv(f.filename)
-        print(df)
-        columns = df.columns
-        print(df['magError'])
-        df['time'] = df['time'].fillna("NA")
-        df['latitude'] = df['latitude'].fillna(0.0)
-        df['longitude'] = df['longitude'].fillna(0.0)
-        df['depth'] = df['depth'].fillna(0.0)
-        df['mag'] = df['mag'].fillna(0.0)
-        df['magType'] = df['magType'].fillna("NA")
-        df['nst'] = df['nst'].fillna(0)
-        df['gap'] = df['gap'].fillna(0.0)
-        df['dmin'] = df['dmin'].fillna(0.0)
-        df['horizontalError'] = df['horizontalError'].fillna(0.0)
-        df['magError'] = df['magError'].fillna(0.0)
-        df['magNst'] = df['magNst'].fillna(0.0)
-        df['depthError'] = df['depthError'].fillna(0.0)
-        print(columns[0], columns[21])
-        start_time = timeit.default_timer()
-        for row in df.itertuples():
-            print(row)
-            cursor.execute(
-                "INSERT INTO csvdatabase.dbo.quakedata_3 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                row.time, row.latitude, row.longitude, row.depth, row.mag, row.magType, row.nst, row.gap, row.dmin,
-                row.rms, row.net, row.id, row.updated, row.place, row.type, row.horizontalError, row.depthError,
-                row.magError, row.magNst, row.status, row.locationSource, row.magSource)
-
-        conn.commit()
-        elapsed = timeit.default_timer() - start_time
-        print('Time taken to insert earthquake data into table is :', elapsed)
-    return render_template("index.html", mielapsed = elapsed)
-
-
 @app.route('/mrandomq', methods=['GET', 'POST'])
 def mrandom_q():
     if request.method == 'POST':
@@ -250,7 +199,7 @@ def mrandom_q():
         stopmag = 4
         start_time = timeit.default_timer()
         for data in range(int(num)):
-            todo = todos.find({"Mag": startmag})
+            todo = todos.find()
             print(todo)
             print("Hello")
         elapsed = timeit.default_timer() - start_time
@@ -270,7 +219,7 @@ def mrrandom_q():
         longitude2 = 150
         start_time = timeit.default_timer()
         for data in range(int(num)):
-            todo = todos.find({"Mag": startmag})
+            todo = todos.find({"Mag": {"$gt":startmag,"$lt":stopmag}})
             print("HI")
             print(todo)
         elapsed = timeit.default_timer() - start_time
